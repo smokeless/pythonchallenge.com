@@ -1,3 +1,5 @@
+import re
+
 def challenge0():
     print(str(2**38)+'.html')
 
@@ -61,6 +63,10 @@ def challenge3():
     raw = ''
     with open('challenge3', 'r') as f:
         raw = f.read()
-    print(raw)
+
+    st = ''.join(re.findall("[^A-Z]+[A-Z]{3}([a-z])[A-Z]{3}[^A-Z]+", raw))
+    print(st)
+
+
 
 challenge3()
