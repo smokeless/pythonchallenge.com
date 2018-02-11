@@ -76,10 +76,11 @@ def challenge4():
     firstHit = 'http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing=12345'
     r = requests.get(firstHit)
     url = 'http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing='
-    prevNothing = ''
+
     regex = re.compile('and the next nothing is (\d+)')
-    num = ''
-    for i in range(400):
+    counter = 0
+    while True:
+        counter += 1
         print(r.text)
         match = regex.search(r.text)
         if match == None and 'Divide' in r.text:
@@ -90,7 +91,7 @@ def challenge4():
         else:
             num = match.group(1)
             r = requests.get(url + num)
-
+    print('It took', counter, 'iterations.')
 
 
 challenge4()
