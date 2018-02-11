@@ -1,4 +1,5 @@
 import re
+import requests
 
 def challenge0():
     print(str(2**38)+'.html')
@@ -67,6 +68,29 @@ def challenge3():
     st = ''.join(re.findall("[^A-Z]+[A-Z]{3}([a-z])[A-Z]{3}[^A-Z]+", raw))
     print(st)
 
+def challenge4():
+    '''
+    follow the chain.
+    :return:
+    '''
+    firstHit = 'http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing=12345'
+    r = requests.get(firstHit)
+    url = 'http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing='
+    prevNothing = ''
+    regex = re.compile('and the next nothing is (\d+)')
+    num = ''
+    for i in range(400):
+        print(r.text)
+        match = regex.search(r.text)
+        if match == None and 'Divide' in r.text:
+            num = str(16044/2) #hardcoded is gross.
+            r = requests.get(url+num)
+        elif match == None:
+            break
+        else:
+            num = match.group(1)
+            r = requests.get(url + num)
 
 
-challenge3()
+
+challenge4()
