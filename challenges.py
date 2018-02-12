@@ -1,5 +1,6 @@
 import re
 import requests
+import pickle
 
 def challenge0():
     print(str(2**38)+'.html')
@@ -94,4 +95,15 @@ def challenge4():
     print('It took', counter, 'iterations.')
 
 
-challenge4()
+def challenge5():
+    '''
+    peak hell = pickle and banner should be a banner.
+    :return:
+    '''
+    r = requests.get('http://www.pythonchallenge.com/pc/def/banner.p', stream=True)
+    raw = r.raw.read()
+    brine = pickle.loads(raw)
+    for line in brine:
+        print(''.join([k * v for k, v in line]))
+
+def challenge6():
