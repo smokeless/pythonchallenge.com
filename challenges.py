@@ -1,6 +1,7 @@
 import re
 import requests
 import pickle
+import zipfile
 
 def challenge0():
     print(str(2**38)+'.html')
@@ -107,3 +108,36 @@ def challenge5():
         print(''.join([k * v for k, v in line]))
 
 def challenge6():
+    '''
+    This looks to be the same as the follow nothing challenge
+    except in a zip file.
+    welcome to my zipped list.
+
+    hint1: start from 90052
+    hint2: answer is inside the zip
+
+    :return:
+    '''
+    zfile = zipfile.ZipFile('channel.zip', 'r')
+
+    regex = re.compile('Next nothing is (\d+)')
+
+    start = '90052.txt'
+    commentList = []
+    while True:
+        order = zfile.read(start).decode()
+        match = regex.search(order)
+        if match:
+            print(match.string)
+            start = str(match.group(1) + '.txt')
+            comment = zfile.getinfo(start)
+            commentList.append(comment.comment)
+        else:
+            print(zfile.read(start).decode('utf-8'))
+            break
+    #after running through, add code to join comments together.
+    commentList = [i.decode() for i in commentList]
+    toString = ''.join(commentList)
+    print(toString)
+
+challenge6()
